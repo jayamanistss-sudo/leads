@@ -7,26 +7,25 @@ on:
 
 jobs:
   deploy:
-    name: Deploy PHP App
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get latest code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Sync files to cPanel
+      - name: Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ftp.serverbyt.in
           username: dev@stss.in
-          password: jaya91599@          # ⚠️ visible—replace later with secrets
-          
-          protocol: sftp                 # SFTP required for your hosting
-          port: 22                       # SFTP port
-          timeout: 600                   # slow shared hosting → higher timeout
+          password: jaya91599@
 
-          local-dir: ./                  # upload entire repo
-          server-dir: leads/             # remote folder
+          protocol: ftp       # REQUIRED
+          port: 21            # Standard FTP port
+          timeout: 600        # More stable
+
+          local-dir: ./
+          server-dir: leads/
 
           exclude: |
             .github/**
