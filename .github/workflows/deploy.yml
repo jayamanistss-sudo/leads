@@ -15,13 +15,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Sync files to cPanel via FTP/FTPS
+      # Step 2: Sync files to cPanel via FTPS
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ftp.stss.in
           username: stss.in
-          password: 'cTL}}Ys@5GF'   # Consider using GitHub Secrets for security
+          password: ${{ secrets.FTP_PASSWORD }}   # safer than plaintext
           server-dir: demo/
           local-dir: ./
           protocol: ftps             # Secure FTP
@@ -33,4 +33,4 @@ jobs:
             node_modules/**
             vendor/**
             admin/**
-          log-level: info            # Optional: verbose logs for debugging
+          log-level: verbose         # Changed from "info" to valid value
