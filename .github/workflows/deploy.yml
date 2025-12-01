@@ -18,10 +18,10 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.6
       with:
         server: ftp.stss.in
-        username: dev@stss.in
+        username: stss.in
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: demo/leadsadbricks/   # <-- must end with /
-        local-dir: ./                      # <-- must end with /
+        server-dir: demo/leadsadbricks/
+        local-dir: ./
         exclude: |
           .github/**
           tests/**
