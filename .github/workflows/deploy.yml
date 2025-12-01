@@ -11,26 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
       - name: Get latest code
         uses: actions/checkout@v4
 
-      # Step 2: Deploy PHP files via FTPS
       - name: Sync files to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ftp.serverbyt.in
           username: dev@stss.in
-          password: jaya91599@  # safer than plaintext
-          server-dir: leads/                        # remote folder
-          local-dir: ./                            # upload entire repo
-          protocol: ftps                           # secure FTP
-          port: 21                                 # standard FTPS explicit port
-          timeout: 60                              # increase if server is slow
+          password: jaya91599@          # ⚠️ visible—replace later with secrets
+          
+          protocol: sftp                 # SFTP required for your hosting
+          port: 22                       # SFTP port
+          timeout: 600                   # slow shared hosting → higher timeout
+
+          local-dir: ./                  # upload entire repo
+          server-dir: leads/             # remote folder
+
           exclude: |
             .github/**
             tests/**
             node_modules/**
             vendor/**
             admin/**
-          log-level: verbose                        # detailed logs
+            .git/**
+            *.md
+
+          log-level: verbose
