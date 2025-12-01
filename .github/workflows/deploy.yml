@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy to cPanel
     runs-on: ubuntu-latest
 
     steps:
@@ -15,20 +15,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Deploy via FTP
-      - name: Sync files to cPanel
+      # Step 2: Sync files to cPanel via FTP/FTPS
+      - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ftp.stss.in
           username: stss.in
-          password: 'cTL}}Ys@5GF'  # Direct password
+          password: 'cTL}}Ys@5GF'   # Consider using GitHub Secrets for security
           server-dir: demo/
           local-dir: ./
-          protocol: ftp           # Plain FTP
-          passive: true           # Use passive mode
+          protocol: ftps             # Secure FTP
+          port: 21                   # FTP port (default 21)
+          timeout: 60                # Timeout in seconds
           exclude: |
             .github/**
             tests/**
             node_modules/**
             vendor/**
             admin/**
+          log-level: info            # Optional: verbose logs for debugging
