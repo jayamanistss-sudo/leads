@@ -25,7 +25,7 @@ jobs:
           timeout: 600        # More stable
 
           local-dir: ./
-          server-dir: leads/
+          server-dir: demo/leads/
 
           exclude: |
             .github/**
