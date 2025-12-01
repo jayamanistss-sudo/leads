@@ -1,0 +1,45 @@
+name: Deploy PHP Application to Cpanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get latest code
+      uses: actions/checkout@v4
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+
+    - name: Install Composer Dependencies
+      run: |
+        composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Run PHP Unit Tests
+      run: |
+        if [ -f "phpunit.xml" ]; then
+          php vendor/bin/phpunit
+        fi
+
+    - name: Sync files to Cpanel
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+      with:
+        server: ftp.serverbyt.in
+        username: dev@stss.in
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: demo/leadsadbricks
+        local-dir: .
+        exclude: |
+          .github/**
+          tests/**
+          node_modules/**
+          vendor/**
+          admin/**
