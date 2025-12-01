@@ -17,11 +17,11 @@ jobs:
     - name: Sync files to Cpanel
       uses: SamKirkland/FTP-Deploy-Action@v4.3.6
       with:
-        server: ftp.stss.in
+        server: ftp.serverbyt.in
         username: dev@stss.in
         password: ${{ secrets.FTP_PASSWORD }}
         server-dir: demo/leadsadbricks
-        local-dir: .
+        local-dir: ./   # <-- must end with /
         exclude: |
           .github/**
           tests/**
