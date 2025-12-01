@@ -20,7 +20,7 @@ jobs:
         server: ftp.stss.in
         username: stss.in
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: demo/leadsadbricks/
+        server-dir: demo/
         local-dir: ./
         exclude: |
           .github/**
