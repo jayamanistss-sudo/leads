@@ -11,20 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Get latest code
-      uses: actions/checkout@v4
+      # Step 1: Checkout the repository
+      - name: Get latest code
+        uses: actions/checkout@v4
 
-    - name: Sync files to Cpanel
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-      with:
-        server: ftp.stss.in
-        username: stss.in
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: demo/
-        local-dir: ./
-        exclude: |
-          .github/**
-          tests/**
-          node_modules/**
-          vendor/**
-          admin/**
+      # Step 2: Deploy via FTP
+      - name: Sync files to Cpanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ftp.stss.in
+          username: stss.in
+          password: 'cTL}}Ys@5GF'   # Direct password (not recommended)
+          server-dir: demo/
+          local-dir: ./
+          exclude: |
+            .github/**
+            tests/**
+            node_modules/**
+            vendor/**
+            admin/**
