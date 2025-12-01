@@ -1,4 +1,4 @@
-name: Deploy PHP Application to cPanel via SFTP
+name: Deploy PHP Application to cPanel via FTP
 
 on:
   push:
@@ -15,18 +15,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Deploy via SFTP
-      - name: Deploy to cPanel via SFTP
-        uses: appleboy/scp-action@master
+      # Step 2: Deploy via FTP
+      - name: Sync files to cPanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
-          host: ftp.stss.in          # Your cPanel server
-          username: stss.in          # FTP/SFTP username
-          password: 'cTL}}Ys@5GF'    # Direct password (not secure)
-          port: 22                   # SFTP port (usually 22)
-          source: "."                # Upload everything in repo
-          target: "demo/"            # Remote directory on server
-          strip_components: 0        # Keeps folder structure
-          rsync: true                # Only upload changed files
+          server: ftp.stss.in
+          username: stss.in
+          password: 'cTL}}Ys@5GF'  # Direct password
+          server-dir: demo/
+          local-dir: ./
+          protocol: ftp           # Plain FTP
+          passive: true           # Use passive mode
           exclude: |
             .github/**
             tests/**
